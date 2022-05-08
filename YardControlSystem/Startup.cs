@@ -27,7 +27,7 @@ namespace YardControlSystem
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-               options.UseSqlite("Filename=YarnControlSystem.db")
+               options.UseSqlite("Filename=YardControlSystem.db")
             );
 
             services.AddControllersWithViews();

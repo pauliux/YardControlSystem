@@ -1,6 +1,6 @@
 using System;
 
-namespace InAndOut.Models
+namespace YardControlSystem.Models
 {
     public class ErrorViewModel
     {

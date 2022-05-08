@@ -1,4 +1,4 @@
-﻿using InAndOut.Models;
+﻿using YardControlSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InAndOut.Controllers
+namespace YardControlSystem.Controllers
 {
     public class HomeController : Controller
     {

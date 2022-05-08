@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace InAndOut.Migrations
+namespace YardControlSystem.Migrations
 {
     public partial class addWarehousesToDatabase : Migration
     {

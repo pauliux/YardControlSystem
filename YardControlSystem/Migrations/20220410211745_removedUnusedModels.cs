@@ -1,10 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace InAndOut.Migrations
+namespace YardControlSystem.Migrations
 {
-    public partial class AddExpensesTable : Migration
+    public partial class removedUnusedModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Expenses");
+
+            migrationBuilder.DropTable(
+                name: "Items");
+
+            migrationBuilder.DropTable(
+                name: "ExpenseTypes");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "ExpenseTypes",
@@ -26,8 +38,8 @@ namespace InAndOut.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Borrower = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Lender = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,8 +52,8 @@ namespace InAndOut.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ExpenseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
+                    ExpenseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpenseTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -59,18 +71,6 @@ namespace InAndOut.Migrations
                 name: "IX_Expenses_ExpenseTypeId",
                 table: "Expenses",
                 column: "ExpenseTypeId");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Expenses");
-
-            migrationBuilder.DropTable(
-                name: "Items");
-
-            migrationBuilder.DropTable(
-                name: "ExpenseTypes");
         }
     }
 }

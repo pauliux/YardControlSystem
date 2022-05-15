@@ -8,14 +8,14 @@ using YardControlSystem.Data;
 namespace YardControlSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220508130515_InitialSqLiteCreate")]
-    partial class InitialSqLiteCreate
+    [Migration("20220515202828_InitialSqLite")]
+    partial class InitialSqLite
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.16");
 
             modelBuilder.Entity("YardControlSystem.Models.Warehouse", b =>
                 {

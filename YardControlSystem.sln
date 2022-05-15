@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30711.63
+VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YardControlSystem", "YardControlSystem\YardControlSystem.csproj", "{22B22269-70F7-4611-ABDF-49DFEB01DDB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YardControlSystem", "YardControlSystem\YardControlSystem.csproj", "{F7F715EC-CCEB-4B89-BF84-18AF1900F3EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{22B22269-70F7-4611-ABDF-49DFEB01DDB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22B22269-70F7-4611-ABDF-49DFEB01DDB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22B22269-70F7-4611-ABDF-49DFEB01DDB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22B22269-70F7-4611-ABDF-49DFEB01DDB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7F715EC-CCEB-4B89-BF84-18AF1900F3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7F715EC-CCEB-4B89-BF84-18AF1900F3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7F715EC-CCEB-4B89-BF84-18AF1900F3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7F715EC-CCEB-4B89-BF84-18AF1900F3EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D5B5A994-3FBE-4809-B496-C3608EE36373}
+		SolutionGuid = {4461FDFD-EF58-4797-A77A-01715542082C}
 	EndGlobalSection
 EndGlobal

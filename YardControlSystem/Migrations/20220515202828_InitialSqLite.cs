@@ -2,7 +2,7 @@
 
 namespace YardControlSystem.Migrations
 {
-    public partial class InitialSqLiteCreate : Migration
+    public partial class InitialSqLite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

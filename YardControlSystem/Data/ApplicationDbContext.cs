@@ -15,5 +15,7 @@ namespace YardControlSystem.Data
         }
 
         public DbSet<Warehouse> Warehouses { get; set; }
+
+        public DbSet<Ramp> Ramps { get; set; }
     }
 }

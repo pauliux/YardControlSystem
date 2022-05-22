@@ -12,11 +12,11 @@ namespace YardControlSystem.Models
         public int OrderNr { get; set; }
         public DateTime DateOfCreation { get; set; }
         public string TrailerLicensePlate { get; set; }
-        public Operation Operation { get; set; }
-        [Required]
+        public int PickUpWarehouseId { get; set; }
+        public Warehouse PickUpWarehouse { get; set; }
+        public int DropOffWarehouseId { get; set; }
+        public Warehouse DropOffWarehouse { get; set; }
         public int DriverId { get; set; }
         public User Driver { get; set; }
-        public int RampId { get; set; }
-        public Ramp Ramp { get; set; }
     }
 }

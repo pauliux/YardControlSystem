@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YardControlSystem.Data;
 
 namespace YardControlSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522140934_FixedOrderAndOperationModels")]
+    partial class FixedOrderAndOperationModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,12 +35,6 @@ namespace YardControlSystem.Migrations
 
                     b.Property<int>("OrderId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<int>("RampId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("ReservedDate")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -145,9 +141,6 @@ namespace YardControlSystem.Migrations
                     b.Property<string>("Company")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("StorekeeperId")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

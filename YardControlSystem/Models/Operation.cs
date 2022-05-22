@@ -11,7 +11,11 @@ namespace YardControlSystem.Models
         [Key]
         public int Id { get; set; }
         public int Duration { get; set; }
+        public DateTime ReservedDate { get; set; }
         public DateTime ArrivalDate { get; set; }
         public DateTime DepartureDate { get; set; }
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
+        public int RampId { get; set; }
     }
 }

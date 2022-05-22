@@ -1,0 +1,72 @@
+﻿@model List<YardControlSystem.Models.ViewModels.OrderViewModel>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Mano užsakymai</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Order" asp-action="Create" class="btn btn-primary">Naujas užsakymas</a>
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Užsakymo nr.
+                    </th>
+                    <th>
+                        Sukūrimo data
+                    </th>
+                    <th>
+                        Vairuotojas
+                    </th>
+                    <th>
+                        Pakrovimo vieta
+                    </th>
+                    <th>
+                        Iškrovimo vieta
+                    </th>
+                    <th>
+                        Transporto priemonės nr.
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                <tr>
+                    <td width="25%">@obj.Order.OrderNr</td>
+                    <td width="25%">@obj.Order.DateOfCreation</td>
+                    <td width="25%">@obj.Order.Driver.Name</td>
+                    <td width="25%">@obj.Order.PickUpWarehouse.Address</td>
+                    <td width="25%">@obj.Order.DropOffWarehouse.Address</td>
+                    <td width="25%">@obj.Order.TrailerLicensePlate</td>
+                    <td width="30%">
+                        <div class="w-100 btn-group" role="group">
+                            @if (!obj.HasOperations)
+                            {
+                                <a asp-controller="Order" asp-action="Update" asp-route-Id="@obj.Order.OrderNr" class="btn btn-primary mx-1">Redaguoti</a>
+                                <a asp-controller="Order" asp-action="Delete" asp-route-Id="@obj.Order.OrderNr" class="btn btn-danger mx-1">Šalinti</a>
+                            }
+                        </div>
+                    </td>
+
+
+                </tr>
+
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Nėra pridėtų rampų</p>
+    }
+
+</div>
+

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YardControlSystem.Data;
 
 namespace YardControlSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522135312_UpdateOrderAndOperationModels")]
+    partial class UpdateOrderAndOperationModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,15 +36,7 @@ namespace YardControlSystem.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RampId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("ReservedDate")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Operations");
                 });
@@ -56,7 +50,7 @@ namespace YardControlSystem.Migrations
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DriverId")
+                    b.Property<int?>("DriverId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("DropOffWarehouseId")
@@ -71,10 +65,6 @@ namespace YardControlSystem.Migrations
                     b.HasKey("OrderNr");
 
                     b.HasIndex("DriverId");
-
-                    b.HasIndex("DropOffWarehouseId");
-
-                    b.HasIndex("PickUpWarehouseId");
 
                     b.ToTable("Orders");
                 });
@@ -146,50 +136,18 @@ namespace YardControlSystem.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("StorekeeperId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.ToTable("Warehouses");
-                });
-
-            modelBuilder.Entity("YardControlSystem.Models.Operation", b =>
-                {
-                    b.HasOne("YardControlSystem.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("YardControlSystem.Models.Order", b =>
                 {
                     b.HasOne("YardControlSystem.Models.User", "Driver")
                         .WithMany()
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YardControlSystem.Models.Warehouse", "DropOffWarehouse")
-                        .WithMany()
-                        .HasForeignKey("DropOffWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YardControlSystem.Models.Warehouse", "PickUpWarehouse")
-                        .WithMany()
-                        .HasForeignKey("PickUpWarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DriverId");
 
                     b.Navigation("Driver");
-
-                    b.Navigation("DropOffWarehouse");
-
-                    b.Navigation("PickUpWarehouse");
                 });
 
             modelBuilder.Entity("YardControlSystem.Models.Ramp", b =>

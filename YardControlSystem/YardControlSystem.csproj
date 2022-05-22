@@ -5,6 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="YardControlSystem.db-wal" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20220522215457_UpdateWithIdentity.cs" />
+    <Compile Include="Migrations\20220522215457_UpdateWithIdentity.Designer.cs" />
+    <Compile Include="Migrations\YardControlSystemIdentityContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" />
@@ -18,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

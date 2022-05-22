@@ -12,9 +12,11 @@ namespace YardControlSystem.Controllers.Manager
 {
     public class OrderController : Controller
     {
+
         private readonly YardControlSystemIdentityContext _db;
 
         public OrderController(YardControlSystemIdentityContext db)
+
         {
             _db = db;
         }

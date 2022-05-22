@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YardControlSystem.Areas.Identity.Data;
 
+
 namespace YardControlSystem.Models.ViewModels
 {
     public class CreateOrderViewModel

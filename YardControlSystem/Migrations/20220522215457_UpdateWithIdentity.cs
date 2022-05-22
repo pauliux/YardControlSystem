@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace YardControlSystem.Migrations
 {
-    public partial class AddIdentity : Migration
+    public partial class UpdateWithIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -176,7 +176,7 @@ namespace YardControlSystem.Migrations
                 {
                     OrderNr = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DateOfCreation = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateOfCreation = table.Column<string>(type: "TEXT", nullable: true),
                     TrailerLicensePlate = table.Column<string>(type: "TEXT", nullable: true),
                     PickUpWarehouseId = table.Column<int>(type: "INTEGER", nullable: false),
                     DropOffWarehouseId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -235,8 +235,8 @@ namespace YardControlSystem.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Duration = table.Column<int>(type: "INTEGER", nullable: false),
                     ReservedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ArrivalDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DepartureDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ArrivalDate = table.Column<string>(type: "TEXT", nullable: true),
+                    DepartureDate = table.Column<string>(type: "TEXT", nullable: true),
                     OrderId = table.Column<int>(type: "INTEGER", nullable: false),
                     RampId = table.Column<int>(type: "INTEGER", nullable: false),
                     WarehouseId = table.Column<int>(type: "INTEGER", nullable: false)

@@ -227,10 +227,10 @@ namespace YardControlSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("ArrivalDate")
+                    b.Property<string>("ArrivalDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DepartureDate")
+                    b.Property<string>("DepartureDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Duration")
@@ -261,7 +261,7 @@ namespace YardControlSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateOfCreation")
+                    b.Property<string>("DateOfCreation")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("DriverId")

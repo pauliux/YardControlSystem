@@ -9,8 +9,8 @@ using YardControlSystem.Data;
 namespace YardControlSystem.Migrations
 {
     [DbContext(typeof(YardControlSystemIdentityContext))]
-    [Migration("20220522164047_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20220522215457_UpdateWithIdentity")]
+    partial class UpdateWithIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -229,10 +229,10 @@ namespace YardControlSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("ArrivalDate")
+                    b.Property<string>("ArrivalDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DepartureDate")
+                    b.Property<string>("DepartureDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Duration")
@@ -263,7 +263,7 @@ namespace YardControlSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateOfCreation")
+                    b.Property<string>("DateOfCreation")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("DriverId")

@@ -1,1 +1,87 @@
-﻿
+﻿@model YardControlSystem.Models.ViewModels.CreateOrderViewModel
+
+<form method="post" asp-action="Create">
+    <div class="border p-3">
+        @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Naujas užsakymas</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="Order.OrderNr">Užsakymo nr.</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="Order.OrderNr" class="form-control" />
+                        <span asp-validation-for="Order.OrderNr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="Order.DateOfCreation">Sukūrimo data</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="Order.DateOfCreation" class="form-control" />
+                        <span asp-validation-for="Order.DateOfCreation" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="Order.TrailerLicensePlate" class="form-control" />
+                        <span asp-validation-for="Order.TrailerLicensePlate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="Order.PickUpWarehouseId">Pakrovimo sandėlys</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="Order.PickUpWarehouseId" class="form-control" />
+                        <span asp-validation-for="Order.PickUpWarehouseId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="Order.DropOffWarehouseId">Iškrovimo sandėlys</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="Order.DropOffWarehouseId" class="form-control" />
+                        <span asp-validation-for="Order.DropOffWarehouseId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="Order.DriverId">Vairuotojas</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="Order.DriverId" class="form-control" />
+                        <span asp-validation-for="Order.DriverId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-75" value="Sukurti" />
+                        </div>
+                        <div class="col">
+                            <a asp-controller="Order" asp-action="OrdersView" class="btn btn-danger w-75">Atgal</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+>>>>>>> 659901cc27c966be2542a75b4083fcb0a00d6454

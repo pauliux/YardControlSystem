@@ -11,7 +11,7 @@ namespace YardControlSystem.Models
     {
         [Key]
         public int OrderNr { get; set; }
-        public DateTime DateOfCreation { get; set; }
+        public string DateOfCreation { get; set; }
         public string TrailerLicensePlate { get; set; }
         public int PickUpWarehouseId { get; set; }
         public Warehouse PickUpWarehouse { get; set; }

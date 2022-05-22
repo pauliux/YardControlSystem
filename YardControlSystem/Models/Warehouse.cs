@@ -14,6 +14,5 @@ namespace YardControlSystem.Models
         public string Company { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
-        public int StorekeeperId { get; set; }
     }
 }

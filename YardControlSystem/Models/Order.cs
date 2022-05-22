@@ -9,6 +9,7 @@ namespace YardControlSystem.Models
     public class Order
     {
         [Key]
+        [Range(0, 2147483647)]
         public int OrderNr { get; set; }
         public DateTime DateOfCreation { get; set; }
         public string TrailerLicensePlate { get; set; }
@@ -17,6 +18,5 @@ namespace YardControlSystem.Models
         public int DropOffWarehouseId { get; set; }
         public Warehouse DropOffWarehouse { get; set; }
         public int DriverId { get; set; }
-        public User Driver { get; set; }
     }
 }

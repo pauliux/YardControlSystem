@@ -23,9 +23,6 @@
                         Sukūrimo data
                     </th>
                     <th>
-                        Vairuotojas
-                    </th>
-                    <th>
                         Pakrovimo vieta
                     </th>
                     <th>
@@ -41,22 +38,10 @@
                 {
                 <tr>
                     <td width="25%">@obj.Order.OrderNr</td>
-                    <td width="25%">@obj.Order.DateOfCreation</td>
-                    <td width="25%">@obj.Order.Driver.Name</td>
+                    <td width="25%">@obj.Order.DateOfCreation.ToShortDateString()</td>
                     <td width="25%">@obj.Order.PickUpWarehouse.Address</td>
                     <td width="25%">@obj.Order.DropOffWarehouse.Address</td>
                     <td width="25%">@obj.Order.TrailerLicensePlate</td>
-                    <td width="30%">
-                        <div class="w-100 btn-group" role="group">
-                            @if (!obj.HasOperations)
-                            {
-                                <a asp-controller="Order" asp-action="Update" asp-route-Id="@obj.Order.OrderNr" class="btn btn-primary mx-1">Redaguoti</a>
-                                <a asp-controller="Order" asp-action="Delete" asp-route-Id="@obj.Order.OrderNr" class="btn btn-danger mx-1">Šalinti</a>
-                            }
-                        </div>
-                    </td>
-
-
                 </tr>
 
                 }

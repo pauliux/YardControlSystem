@@ -15,19 +15,13 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="Order.OrderNr" class="form-control" />
+                        <input asp-for="Order.OrderNr" max="2,147,483,647" class="form-control" />
                         <span asp-validation-for="Order.OrderNr" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <label asp-for="Order.DateOfCreation">Sukūrimo data</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-6">
-                        <input asp-for="Order.DateOfCreation" class="form-control" />
-                        <span asp-validation-for="Order.DateOfCreation" class="text-danger"></span>
+                        <label asp-for="Order.TrailerLicensePlate">Transporto priemonės valstybiniai nr.</label>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -43,8 +37,9 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="Order.PickUpWarehouseId" class="form-control" />
-                        <span asp-validation-for="Order.PickUpWarehouseId" class="text-danger"></span>
+                        <select asp-for="PickUpWarehouse" asp-items=Model.Warehouses>
+                            <option selected="selected" value=Model.Warehouses[0]></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -54,19 +49,9 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="Order.DropOffWarehouseId" class="form-control" />
-                        <span asp-validation-for="Order.DropOffWarehouseId" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-6">
-                        <label asp-for="Order.DriverId">Vairuotojas</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-6">
-                        <input asp-for="Order.DriverId" class="form-control" />
-                        <span asp-validation-for="Order.DriverId" class="text-danger"></span>
+                        <select asp-for="DropOffWarehouse" asp-items=Model.Warehouses>
+                            <option selected="selected" value=Model.Warehouses[1]></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">

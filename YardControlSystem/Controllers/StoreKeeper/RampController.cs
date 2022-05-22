@@ -9,8 +9,6 @@ using YardControlSystem.Models;
 using YardControlSystem.Models.ViewModels;
 
 
-
-
 namespace YardControlSystem.Controllers.StoreKeeper
 {
     public class RampController : Controller
@@ -27,7 +25,7 @@ namespace YardControlSystem.Controllers.StoreKeeper
         {
             var warehouses = _db.Warehouses.ToList();
             var ramps = _db.Ramps.ToList();
-            var operations = _db.Operations.ToList();
+            var operations = _db.Operations.OrderBy(j =>j.ReservedDate).ToList();
 
             var warehouseRampOperation = new List<RampManagementViewModel>();
 
@@ -41,9 +39,7 @@ namespace YardControlSystem.Controllers.StoreKeeper
                     {
                         rampList.Add(oneRamp);
                     }
-
                    
-
                     foreach (var oneOperation in operations)
                     {
                         if (oneRamp.Id == oneOperation.RampId)
@@ -60,8 +56,13 @@ namespace YardControlSystem.Controllers.StoreKeeper
 
                 }) ;
             }
-
             return View(warehouseRampOperation);
+        }
+
+        public IActionResult CheckDone()
+        {
+
+            return View();
         }
     }
 }

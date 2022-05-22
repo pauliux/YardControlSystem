@@ -1,0 +1,36 @@
+﻿@model IEnumerable<YardControlSystem.Models.ViewModels.RampManagementViewModel>
+
+@{
+    ViewData["Title"] = "RampManagement";
+}
+
+<h1>RampManagement</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <h4> @item.Warehouses.Company</h4>
+            </tr>
+
+            @foreach (var rampa in item.Ramps)
+            {
+
+                <a>Rampa @rampa.Number</a>
+
+                @foreach (var operation in item.Operations)
+                {
+                    <a>Duration @operation.Duration</a>
+                    <a>ArrivalDate @operation.ArrivalDate</a>
+                    <a>DepartureDate @operation.DepartureDate</a>
+                }
+            }
+
+        }
+    </tbody>
+</table>

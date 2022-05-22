@@ -58,14 +58,24 @@
                     <tr>
                         @if (item.Warehouses.Id == operation.WarehouseId && operation.RampId == rampa.Id)
                         {
-                            @if (operation.ReservedDate > DateTime.Today)
+                            @if (operation.ReservedDate.AddMinutes(operation.Duration) > DateTime.Now && operation.DepartureDate.Length == 0)
                             {
                                 <td width="25%"> Operacija @operation.Id</td>
-                                <td width="25%">Duration @operation.ReservedDate</td>
-                                <td>
-                                    <a asp-controller="Ramp" asp-action="Update" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti</a>
+                                <td width="25%">Rezervuota data @operation.ReservedDate</td>
 
-                                </td>
+                                @if (operation.ArrivalDate.Length != 0)
+                                {
+                                    <td>
+                                        <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti išvykimą</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti atvykimą</a>
+                                    </td>
+                                }
+
                                 break;
                             }
 

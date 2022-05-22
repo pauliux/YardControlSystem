@@ -59,10 +59,26 @@ namespace YardControlSystem.Controllers.StoreKeeper
             return View(warehouseRampOperation);
         }
 
-        public IActionResult CheckDone()
+        public IActionResult CheckDone(Operation operation)
         {
+            var obj = _db.Operations.FirstOrDefault(x => x.Id == operation.Id);
 
-            return View();
+            var ramps = _db.Ramps.FirstOrDefault(x => x.WarehouseId == operation.WarehouseId && x.Id == operation.RampId);
+
+            if (obj.ArrivalDate.Length == 0)
+            {
+                obj.ArrivalDate = DateTime.Now.ToString();
+                _db.SaveChanges();
+                
+            }
+            else
+            {
+                obj.DepartureDate = DateTime.Now.ToString();
+                _db.SaveChanges();
+            }
+            
+            
+            return RedirectToAction("RampManagementView");
         }
     }
 }

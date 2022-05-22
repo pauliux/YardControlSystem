@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using YardControlSystem.Areas.Identity.Data
+@using YardControlSystem.Models.Enums
+
+@inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,20 +24,37 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Warehouse" asp-action="WarehousesView">Sandėliai</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="OrdersView">Užsakymai</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ramp" asp-action="RampManagementView">Rampos</a>
-                        </li>
-                    </ul>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    User user = await UserManager.FindByNameAsync(User.Identity.Name);
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                        <ul class="navbar-nav flex-grow-1">
+                            @if (true || user.Role == Role.Storekeeper)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Warehouse" asp-action="WarehousesView">Sandėliai</a>
+                                </li>
+                            }
+                            @if (true || user.Role == Role.Driver || user.Role == Role.Manager)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="OrdersView">Užsakymai</a>
+                                </li>
+                            }
+                            @if (true || user.Role == Role.Manager || user.Role == Role.Storekeeper)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Ramp" asp-action="RampManagementView">Rampos</a>
+                                </li>
+                            }
+                            </ul>
+                    </div>
+                }
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial.cshtml" />
                 </div>
-            </div>
         </nav>
     </header>
     <div class="container">

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using YardControlSystem.Areas.Identity.Data;
+
 
 namespace YardControlSystem.Models.ViewModels
 {

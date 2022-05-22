@@ -12,9 +12,11 @@ namespace YardControlSystem.Controllers.Manager
 {
     public class OrderController : Controller
     {
-        private readonly ApplicationDbContext _db;
 
-        public OrderController(ApplicationDbContext db)
+        private readonly YardControlSystemIdentityContext _db;
+
+        public OrderController(YardControlSystemIdentityContext db)
+
         {
             _db = db;
         }
@@ -26,7 +28,7 @@ namespace YardControlSystem.Controllers.Manager
             var orderViewModels = new List<OrderViewModel>();
             foreach (var order in orders)
             {
-                order.Driver = _db.Users.FirstOrDefault(x => order.DriverId == x.Id);
+                order.Driver = _db.Users.FirstOrDefault(x => order.DriverId.ToString() == x.Id);
                 order.PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id);
                 order.DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id);
                 orderViewModels.Add(new OrderViewModel

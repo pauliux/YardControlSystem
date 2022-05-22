@@ -15,12 +15,14 @@ namespace YardControlSystem.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<YardControlSystemIdentityContext>(options =>
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("YardControlSystemIdentityContextConnection")));
 
-                services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+               
                     .AddEntityFrameworkStores<YardControlSystemIdentityContext>();
             });
         }

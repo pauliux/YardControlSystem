@@ -6,6 +6,7 @@ using YardControlSystem.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using YardControlSystem.Models;
 
 namespace YardControlSystem.Data
 {
@@ -23,5 +24,12 @@ namespace YardControlSystem.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+        public DbSet<Warehouse> Warehouses { get; set; }
+
+        public DbSet<Ramp> Ramps { get; set; }
+
+        public DbSet<Operation> Operations { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
     }
 }

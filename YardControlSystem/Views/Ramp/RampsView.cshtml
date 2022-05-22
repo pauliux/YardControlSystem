@@ -1,0 +1,60 @@
+﻿@model YardControlSystem.Models.RampsViewModel
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Sandėlio @Model.Warehouse.Company rampų sąrašas</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Ramp" asp-action="Create" asp-route-WarehouseId="@Model.Warehouse.Id" class="btn btn-primary">Pridėti naują rampą</a>
+        </div>
+    </div>
+    <br />
+     
+    @if(Model.Ramps.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Numeris
+                    </th>
+                    <th>
+                        Būsena
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.Ramps)
+                {
+                <tr>
+                    <td width="25%">@obj.Number</td>
+                    @if (obj.Working == false)
+                    {
+                        <td width="25%">Neveikia</td>
+                    }
+                    else
+                    {
+                        <td width="25%">Veikia</td>
+                    }
+                    <td width="30%">
+                        <div class="w-100 btn-group" role="group">
+                            <a asp-controller="Ramp" asp-action="Update" asp-route-Id="@obj.Id" class="btn btn-primary mx-1">Atnaujinti</a>
+                            <a asp-controller="Ramp" asp-action="Delete" asp-route-Id="@obj.Id" class="btn btn-danger mx-1">Šalinti</a>
+                        </div>
+                    </td>
+
+
+                </tr>
+            
+                }
+            </tbody>
+        </table> 
+    }
+    else
+    {
+        <p>Nėra pridėtų rampų</p>
+    }
+
+</div>
+

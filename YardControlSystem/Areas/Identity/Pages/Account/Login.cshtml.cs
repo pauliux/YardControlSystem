@@ -43,15 +43,17 @@ namespace YardControlSystem.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "{0} privalomas laukas")]
             [EmailAddress]
+            [Display(Name = "El. paštas")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "{0} privalomas laukas")]
             [DataType(DataType.Password)]
+            [Display(Name = "Slaptažodis")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Prisiminti?")]
             public bool RememberMe { get; set; }
         }
 

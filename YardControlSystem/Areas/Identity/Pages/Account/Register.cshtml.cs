@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using YardControlSystem.Models.Enums;
 
 namespace YardControlSystem.Areas.Identity.Pages.Account
 {
@@ -46,20 +47,35 @@ namespace YardControlSystem.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "{0} privalomas laukas")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Vardas")]
+            public string Name { get; set; }
+
+            [Required(ErrorMessage = "{0} privalomas laukas")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Pavardė")]
+            public string Surname { get; set; }
+
+            [Required(ErrorMessage = "{0} privalomas laukas")]
+            //[DataType(DataType.)]
+            [Display(Name = "Rolė")]
+            public int Role { get; set; }
+
+            [Required(ErrorMessage = "{0} privalomas laukas")]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "El paštas")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "{0} privalomas laukas")]
+            [StringLength(100, ErrorMessage = "{0} turi būti mažiausiai {2} ir daugiausiai {1} ilgio.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Slaptažodis")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Pakartokite slaptažodį")]
+            [Compare("Password", ErrorMessage = "Slaptažodžiai nesutampa")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -75,7 +91,7 @@ namespace YardControlSystem.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Email, Email = Input.Email, Name = Input.Name, Surname = Input.Surname, Role=(Role)Input.Role };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

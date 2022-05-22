@@ -17,5 +17,6 @@ namespace YardControlSystem.Models
         public int OrderId { get; set; }
         public Order Order { get; set; }
         public int RampId { get; set; }
+        public int WarehouseId { get; set; }
     }
 }

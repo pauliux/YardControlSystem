@@ -10,5 +10,6 @@ namespace YardControlSystem.Models.ViewModels
         public Warehouse Warehouses { get; set; }
         public List<Ramp> Ramps { get; set; }
         public List<Operation> Operations { get; set; }
+
     }
 }

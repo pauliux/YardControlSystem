@@ -10,9 +10,9 @@ namespace YardControlSystem.Controllers
 {
     public class WarehouseController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly YardControlSystemIdentityContext _db;
 
-        public WarehouseController(ApplicationDbContext db)
+        public WarehouseController(YardControlSystemIdentityContext db)
         {
             _db = db;
         }

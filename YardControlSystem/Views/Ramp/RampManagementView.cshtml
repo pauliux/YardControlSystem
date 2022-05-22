@@ -4,33 +4,97 @@
     ViewData["Title"] = "RampManagement";
 }
 
-<h1>RampManagement</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
 
-                <h4> @item.Warehouses.Company</h4>
-            </tr>
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Sandėliai, rampos ir užsakymai</h2>
+        </div>
+    </div>
+    <br />
 
-            @foreach (var rampa in item.Ramps)
-            {
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+            </thead>
+            <tbody>
 
-                <a>Rampa @rampa.Number</a>
-
-                @foreach (var operation in item.Operations)
+                
+                @foreach (var item in Model)
                 {
-                    <a>Duration @operation.Duration</a>
-                    <a>ArrivalDate @operation.ArrivalDate</a>
-                    <a>DepartureDate @operation.DepartureDate</a>
-                }
-            }
 
-        }
-    </tbody>
-</table>
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <tr>
+                            <td width="25%">
+                            <h4>
+                                @item.Warehouses.Company
+                                </h4>
+                                </td>
+
+                        </tr>
+
+                        @foreach (var rampa in item.Ramps)
+                        {
+
+
+                            @if (rampa.WarehouseId == item.Warehouses.Id)
+                            {
+
+                            <tr>
+                               
+                            <td width="25%">
+                                    <h6>
+                                        Rampa @rampa.Number
+                                        </h6>
+                            </td>
+
+                            </tr>
+                            }
+
+                            @foreach (var operation in item.Operations)
+                            {
+                    <tr>
+                        @if (item.Warehouses.Id == operation.WarehouseId && operation.RampId == rampa.Id)
+                        {
+                            @if (operation.ReservedDate.AddMinutes(operation.Duration) > DateTime.Now && operation.DepartureDate.Length == 0)
+                            {
+                                <td width="25%"> Operacija @operation.Id</td>
+                                <td width="25%">Rezervuota data @operation.ReservedDate</td>
+
+                                @if (operation.ArrivalDate.Length != 0)
+                                {
+                                    <td>
+                                        <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti išvykimą</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti atvykimą</a>
+                                    </td>
+                                }
+
+                                break;
+                            }
+
+                        }
+
+                    </tr>
+                            }
+                        }
+                    </table>
+
+                }
+
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Nėra rampų.</p>
+    }
+
+</div>

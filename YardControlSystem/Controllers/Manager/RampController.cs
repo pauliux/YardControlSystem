@@ -11,9 +11,9 @@ namespace YardControlSystem.Controllers.Manager
     public class RampController : Controller
     {
 
-        private readonly ApplicationDbContext _db;
+        private readonly YardControlSystemIdentityContext _db;
 
-        public RampController(ApplicationDbContext db)
+        public RampController(YardControlSystemIdentityContext db)
         {
             _db = db;
         }

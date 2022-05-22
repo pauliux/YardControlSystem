@@ -9,15 +9,13 @@ using YardControlSystem.Models;
 using YardControlSystem.Models.ViewModels;
 
 
-
-
 namespace YardControlSystem.Controllers.StoreKeeper
 {
     public class RampController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly YardControlSystemIdentityContext _db;
 
-        public RampController(ApplicationDbContext db)
+        public RampController(YardControlSystemIdentityContext db)
         {
             _db = db;
         }
@@ -27,7 +25,7 @@ namespace YardControlSystem.Controllers.StoreKeeper
         {
             var warehouses = _db.Warehouses.ToList();
             var ramps = _db.Ramps.ToList();
-            var operations = _db.Operations.ToList();
+            var operations = _db.Operations.OrderBy(j =>j.ReservedDate).ToList();
 
             var warehouseRampOperation = new List<RampManagementViewModel>();
 
@@ -41,9 +39,7 @@ namespace YardControlSystem.Controllers.StoreKeeper
                     {
                         rampList.Add(oneRamp);
                     }
-
                    
-
                     foreach (var oneOperation in operations)
                     {
                         if (oneRamp.Id == oneOperation.RampId)
@@ -60,8 +56,29 @@ namespace YardControlSystem.Controllers.StoreKeeper
 
                 }) ;
             }
-
             return View(warehouseRampOperation);
+        }
+
+        public IActionResult CheckDone(Operation operation)
+        {
+            var obj = _db.Operations.FirstOrDefault(x => x.Id == operation.Id);
+
+            var ramps = _db.Ramps.FirstOrDefault(x => x.WarehouseId == operation.WarehouseId && x.Id == operation.RampId);
+
+            if (obj.ArrivalDate.Length == 0)
+            {
+                obj.ArrivalDate = DateTime.Now.ToString();
+                _db.SaveChanges();
+                
+            }
+            else
+            {
+                obj.DepartureDate = DateTime.Now.ToString();
+                _db.SaveChanges();
+            }
+            
+            
+            return RedirectToAction("RampManagementView");
         }
     }
 }

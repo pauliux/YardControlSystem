@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YardControlSystem.Data;
 
 namespace YardControlSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522104733_UpdatedOrdersModel")]
+    partial class UpdatedOrdersModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,15 +74,13 @@ namespace YardControlSystem.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("WarehouseId")
+                    b.Property<int>("WarehouseId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("Working")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("WarehouseId");
 
                     b.ToTable("Ramps");
                 });
@@ -148,18 +148,6 @@ namespace YardControlSystem.Migrations
                     b.Navigation("Driver");
 
                     b.Navigation("Operation");
-                });
-
-            modelBuilder.Entity("YardControlSystem.Models.Ramp", b =>
-                {
-                    b.HasOne("YardControlSystem.Models.Warehouse", null)
-                        .WithMany("Ramps")
-                        .HasForeignKey("WarehouseId");
-                });
-
-            modelBuilder.Entity("YardControlSystem.Models.Warehouse", b =>
-                {
-                    b.Navigation("Ramps");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ namespace YardControlSystem.Models
         public int OrderNr { get; set; }
         public DateTime DateOfCreation { get; set; }
         public string TrailerLicensePlate { get; set; }
-        public int OperationId { get; set; }
+        public Operation Operation { get; set; }
         [Required]
-        public int DriverId { get; set; }
+        public User Driver { get; set; }
     }
 }

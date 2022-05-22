@@ -1,17 +1,17 @@
-﻿@model IEnumerable<YardControlSystem.Models.Ramp>
+﻿@model YardControlSystem.Models.RampsViewModel
 
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Rampų sąrašas</h2>
+            <h2 class="text-primary">Sandėlio @Model.Warehouse.Company rampų sąrašas</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-controller="Ramp" asp-action="Create" class="btn btn-primary">Pridėti naują rampą</a>
+            <a asp-controller="Ramp" asp-action="Create" asp-route-WarehouseId="@Model.Warehouse.Id" class="btn btn-primary">Pridėti naują rampą</a>
         </div>
     </div>
     <br />
      
-    @if(Model.Count() > 0)
+    @if(Model.Ramps.Count() > 0)
     {
         <table class="table table-bordered table-striped" style="width:100%">
             <thead>
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var obj in Model)
+                @foreach (var obj in Model.Ramps)
                 {
                 <tr>
                     <td width="25%">@obj.Number</td>

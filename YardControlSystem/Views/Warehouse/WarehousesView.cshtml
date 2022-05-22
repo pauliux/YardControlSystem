@@ -6,7 +6,6 @@
             <h2 class="text-primary">Sandėlių sąrašas</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-controller="Ramp" asp-action="RampsView" class="btn btn-primary">Peržiūrėti rampas</a>
             <a asp-controller="Warehouse" asp-action="Create" class="btn btn-primary">Pridėti naują sandėlį</a>
         </div>
     </div>
@@ -38,6 +37,7 @@
                         <td width="20%">@obj.City</td>
                         <td width="30%">
                             <div class="w-100 btn-group" role="group">
+                                <a asp-controller="Ramp" asp-action="RampsView" asp-route-Id="@obj.Id" class="btn btn-primary">Peržiūrėti rampas</a>
                                 <a asp-controller="Warehouse" asp-action="Update" asp-route-Id="@obj.Id" class="btn btn-primary mx-1">Atnaujinti</a>
                                 <a asp-controller="Warehouse" asp-action="Delete" asp-route-Id="@obj.Id" class="btn btn-danger mx-1">Šalinti</a>
                             </div>

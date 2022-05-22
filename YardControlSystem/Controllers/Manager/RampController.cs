@@ -19,10 +19,17 @@ namespace YardControlSystem.Controllers.Manager
         }
 
 
-        public IActionResult RampsView()
+        public IActionResult RampsView(int id)
         {
-            IEnumerable<Ramp> objList = _db.Ramps;
-            return View(objList);
+            var objList = _db.Ramps.Where(x => x.WarehouseId == id).ToList();
+            var warehouse = _db.Warehouses.FirstOrDefault(x => x.Id == id);
+            var rampsViewModel = new RampsViewModel
+            {
+                Warehouse = warehouse,
+                Ramps = objList
+            };
+
+            return View(rampsViewModel);
 
         }
 
@@ -41,9 +48,9 @@ namespace YardControlSystem.Controllers.Manager
             {
                 _db.Ramps.Add(obj);
                 _db.SaveChanges();
-                return RedirectToAction("RampsView");
+                return RedirectToAction("RampsView", new { id = obj.WarehouseId });
             }
-            return View(obj);
+            return View();
 
         }
 
@@ -78,7 +85,7 @@ namespace YardControlSystem.Controllers.Manager
 
             _db.Ramps.Remove(obj);
             _db.SaveChanges();
-            return RedirectToAction("RampsView");
+            return RedirectToAction("RampsView", new { id = obj.WarehouseId });
 
         }
 
@@ -108,7 +115,7 @@ namespace YardControlSystem.Controllers.Manager
             {
                 _db.Ramps.Update(obj);
                 _db.SaveChanges();
-                return RedirectToAction("RampsView");
+                return RedirectToAction("RampsView", new { id = obj.WarehouseId });
             }
             return View(obj);
 

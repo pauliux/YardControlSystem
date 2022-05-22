@@ -4,10 +4,11 @@
     <div class="border p-3">
         @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Pridėti rampą</h2> 
+            <h2 class="text-black-50 pl-3">Pridėti rampą</h2>
         </div>
         <div class="row">
             <div class="col-12">
+                <input asp-for="WarehouseId" value=@Context.Request.Query["warehouseId"] hidden />
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="Number">Numeris</label>
@@ -41,7 +42,7 @@
                             <input type="submit" class="btn btn-info w-75" value="Sukurti" />
                         </div>
                         <div class="col">
-                            <a asp-action="RampsView" class="btn btn-danger w-75">Atgal</a>
+                            <a asp-controller="Warehouse" asp-action="WarehousesView" class="btn btn-danger w-75">Atgal</a>
                         </div>
                     </div>
                 </div>

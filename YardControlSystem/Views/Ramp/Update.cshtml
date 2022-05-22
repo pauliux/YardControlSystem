@@ -2,6 +2,8 @@
 
 <form method="post" asp-action="Update">
     <input asp-for="Id" hidden />
+    <input asp-for="WarehouseId" value=@Model.WarehouseId hidden />
+
     <div class="border p-3">
 
         <div class="form-group row">
@@ -23,7 +25,7 @@
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="Working">
-                            Būsena: 
+                            Būsena:
 
                             @if (Model.Working == true)
                             {
@@ -46,14 +48,14 @@
                         <span asp-validation-for="Working" class="text-danger"></span>
                     </div>
                 </div>
-              
+
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
                         <div class="col">
                             <input type="submit" class="btn btn-info w-75" value="Atnaujinti" />
                         </div>
                         <div class="col">
-                            <a asp-action="RampsView" class="btn btn-danger w-75">Atgal</a>
+                            <a asp-action="RampsView" asp-route-Id=@Model.WarehouseId class="btn btn-danger w-75">Atgal</a>
                         </div>
                     </div>
                 </div>

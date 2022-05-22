@@ -14,6 +14,9 @@ namespace YardControlSystem.Models
         public string TrailerLicensePlate { get; set; }
         public Operation Operation { get; set; }
         [Required]
+        public int DriverId { get; set; }
         public User Driver { get; set; }
+        public int RampId { get; set; }
+        public Ramp Ramp { get; set; }
     }
 }

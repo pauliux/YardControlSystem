@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YardControlSystem.Data;
 
 namespace YardControlSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522100607_AddOrdersAndOperations")]
+    partial class AddOrdersAndOperations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,12 +47,6 @@ namespace YardControlSystem.Migrations
                     b.Property<DateTime>("DateOfCreation")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DriverId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("OperationId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("TrailerLicensePlate")
                         .HasColumnType("TEXT");
 
@@ -68,44 +64,12 @@ namespace YardControlSystem.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("WarehouseId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("Working")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("Ramps");
-                });
-
-            modelBuilder.Entity("YardControlSystem.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("YardControlSystem.Models.Warehouse", b =>

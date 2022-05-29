@@ -1,0 +1,63 @@
+﻿@model List<YardControlSystem.Models.ViewModels.OrderViewModel>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Laisvi užsakymai</h2>
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Užsakymo nr.
+                    </th>
+                    <th>
+                        Sukūrimo data
+                    </th>
+                    <th>
+                        Pakrovimo vieta
+                    </th>
+                    <th>
+                        Iškrovimo vieta
+                    </th>
+                    <th>
+                        Transporto priemonės nr.
+                    </th>
+                    <th>
+                        Statusas
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    if (obj.HasOperations == false)
+                    {
+                <tr>
+                    <td width="25%">@obj.Order.OrderNr</td>
+                    <td width="25%">@obj.Order.DateOfCreation.ToShortDateString()</td>
+                    <td width="25%">@obj.Order.PickUpWarehouse.Address</td>
+                    <td width="25%">@obj.Order.DropOffWarehouse.Address</td>
+                    <td width="25%">@obj.Order.TrailerLicensePlate</td>
+                    <td width="25%">@(obj.HasOperations ? "Priskirtas" : "Nepriskirtas")</td>
+                    <td><a asp-controller="Order" asp-action="AssignOrder" asp-route-Id="@obj.Order.OrderNr" class="btn btn-primary">Prisiskirti užsakymą</a></td>
+                </tr>
+                    }
+
+
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Nėra užsakymų.</p>
+    }
+
+</div>
+

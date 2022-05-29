@@ -17,8 +17,8 @@
     </script>
 
 }
-<form method="post" asp-action="AssignOrderToDriver">
-    <input asp-for="Order.OrderNr" hidden />
+<form method="post" asp-action="AssignOrderView">
+    <input  asp-for="Order.OrderNr" hidden />
     <div class="border p-3">
         @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
         <div class="form-group row">
@@ -26,6 +26,7 @@
         </div>
         <div class="row">
             <div class="col-12">
+                <div class="text-danger">@ViewBag.ErrorMessage</div>
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="Order.OrderNr">Užsakymo nr.</label>
@@ -46,6 +47,7 @@
                         <input asp-for="Order.TrailerLicensePlate" disabled class="form-control" />
                     </div>
                 </div>
+                <input asp-for="PickUpWarehouse" value=@ViewBag.PickUpWarehouseId hidden />
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="PickUpWarehouse">Pakrovimo sandėlys</label>
@@ -56,6 +58,7 @@
                         <input asp-for="PickUpWarehouse" disabled class="form-control" />
                     </div>
                 </div>
+                <input asp-for="DropOffWarehouse" value=@ViewBag.DropOffWarehouseId hidden />
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="DropOffWarehouse">Iškrovimo sandėlys</label>

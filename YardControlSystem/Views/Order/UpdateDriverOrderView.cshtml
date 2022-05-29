@@ -26,6 +26,7 @@
         </div>
         <div class="row">
             <div class="col-12">
+                <div class="text-danger">@ViewBag.ErrorMessage</div>
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="Order.OrderNr">Užsakymo nr.</label>
@@ -72,7 +73,7 @@
                     <div class="col-6">
                         <label asp-for="PickUpOperation.ReservedDate" class="control-label">Pakrovimo data ir laikas</label>
                         <div class='input-group date' id='pickUpDatepicker'>
-                            <input asp-for="PickUpOperation.ReservedDate" type="text" class="form-control"  value=@Model.PickUpOperation.ReservedDate />
+                            <input asp-for="PickUpOperation.ReservedDate" type="text" class="form-control" value=@Model.PickUpOperation.ReservedDate />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>

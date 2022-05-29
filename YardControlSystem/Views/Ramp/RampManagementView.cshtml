@@ -21,7 +21,7 @@
 
             <table class="table table-bordered table-striped" style="width:100%">
                 <tr>
-                    <td width="100%">
+                    <td colspan="3" width="100%">
                         <h4>
                             @item.Warehouses.Company - @item.Warehouses.Address, @item.Warehouses.City
                         </h4>
@@ -38,7 +38,7 @@
 
                         <tr>
 
-                            <td width="25%">
+                            <td colspan="3" width="25%">
                                 <h6>
                                     Rampa @rampa.Number
                                 </h6>
@@ -49,33 +49,34 @@
 
                     @foreach (var operation in item.Operations)
                     {
-                        <tr>
-                            @if (item.Warehouses.Id == operation.WarehouseId && operation.RampId == rampa.Id)
-                            {
-                                @if (operation.ReservedDate.AddMinutes(operation.Duration) > DateTime.Now && operation.DepartureDate.Length == 0)
-                                {
-                                    <td width="25%"> Operacija @operation.Id</td>
-                                    <td width="25%">Rezervuota data @operation.ReservedDate</td>
+            <tr>
+                @if (item.Warehouses.Id == operation.WarehouseId && operation.RampId == rampa.Id)
+                {
+                    @if (operation.ReservedDate.AddMinutes(operation.Duration) > DateTime.Now && operation.DepartureDate == null)
+                    {
+                        <td width="25%"> @operation.Order.TrailerLicensePlate</td>
 
-                                    @if (operation.ArrivalDate.Length != 0)
-                                    {
-                                        <td>
-                                            <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti išvykimą</a>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                            <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti atvykimą</a>
-                                        </td>
-                                    }
+                        @if (operation.ArrivalDate != null)
+                        {
+                            <td width="25%">Turi išvykti iki @operation.ReservedDate.AddMinutes(operation.Duration)</td>
+                            <td>
+                                <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti išvykimą</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td width="25%">Rezervuota data @operation.ReservedDate</td>
+                            <td>
+                                <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti atvykimą</a>
+                            </td>
+                        }
 
-                                    break;
-                                }
+                        break;
+                    }
 
-                            }
+                }
 
-                        </tr>
+            </tr>
                     }
                 }
             </table>

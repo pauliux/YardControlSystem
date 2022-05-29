@@ -26,6 +26,7 @@ namespace YardControlSystem.Controllers.StoreKeeper
             var warehouses = _db.Warehouses.ToList();
             var ramps = _db.Ramps.ToList();
             var operations = _db.Operations.OrderBy(j =>j.ReservedDate).ToList();
+            var orders = _db.Orders.ToList();
 
             var warehouseRampOperation = new List<RampManagementViewModel>();
 
@@ -44,6 +45,7 @@ namespace YardControlSystem.Controllers.StoreKeeper
                     {
                         if (oneRamp.Id == oneOperation.RampId)
                         {
+                            oneOperation.Order = orders.Find(x => x.OrderNr == oneOperation.OrderId);
                             operationList.Add(oneOperation);
                         }
                     }
@@ -65,7 +67,7 @@ namespace YardControlSystem.Controllers.StoreKeeper
 
             var ramps = _db.Ramps.FirstOrDefault(x => x.WarehouseId == operation.WarehouseId && x.Id == operation.RampId);
 
-            if (obj.ArrivalDate.Length == 0)
+            if (obj.ArrivalDate == null)
             {
                 obj.ArrivalDate = DateTime.Now.ToString();
                 _db.SaveChanges();

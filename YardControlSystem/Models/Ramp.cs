@@ -13,6 +13,7 @@ namespace YardControlSystem.Models
         [Required]
         public bool Working { get; set; }
         [Required]
+		[Range(1, int.MaxValue, ErrorMessage = "Rampos numeris turi būti teigiamas")]
         public int Number { get; set; }
 
         public int WarehouseId { get; set; }

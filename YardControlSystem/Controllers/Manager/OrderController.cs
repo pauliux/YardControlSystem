@@ -44,8 +44,10 @@ namespace YardControlSystem.Controllers.Manager
         }
 
         // GET: OrderController/Create
-        public ActionResult Create()
+        public ActionResult Create(string error = "")
         {
+            ViewBag.ErrorMessage = error;
+
             var warehouses = _db.Warehouses.ToList();
 
             var items = new List<SelectListItem> { };
@@ -69,25 +71,39 @@ namespace YardControlSystem.Controllers.Manager
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateOrderViewModel obj)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var pickUp = int.Parse(obj.PickUpWarehouse);
-                var dropoff = int.Parse(obj.DropOffWarehouse);
-                obj.Order.PickUpWarehouseId = pickUp;
-                obj.Order.DropOffWarehouseId = dropoff;
-                obj.Order.DateOfCreation = DateTime.Today;
+                if (ModelState.IsValid)
+                {
+                    var pickUp = int.Parse(obj.PickUpWarehouse);
+                    var dropoff = int.Parse(obj.DropOffWarehouse);
 
-                _db.Orders.Add(obj.Order);
+                    if (pickUp == dropoff)
+                    {
+                        return Create("Pakrovimo ir iškrovimo sandėliai sutampa");
+                    }
 
-                _db.SaveChanges();
-                return RedirectToAction("OrdersView");
+                    obj.Order.PickUpWarehouseId = pickUp;
+                    obj.Order.DropOffWarehouseId = dropoff;
+                    obj.Order.DateOfCreation = DateTime.Today;
+
+                    _db.Orders.Add(obj.Order);
+
+                    _db.SaveChanges();
+                    return RedirectToAction("OrdersView");
+                }
+                return Create();
+            } catch (Exception exception)
+            {
+                return Create(exception.Message);
             }
-            return RedirectToAction("OrdersView");
         }
 
         // GET: OrderController/Update/5
-        public ActionResult Update(int id)
+        public ActionResult Update(int id, string error = "")
         {
+            ViewBag.ErrorMessage = error;
+
             var warehouses = _db.Warehouses.ToList();
 
             var items = new List<SelectListItem> { };
@@ -123,19 +139,31 @@ namespace YardControlSystem.Controllers.Manager
         [ValidateAntiForgeryToken]
         public ActionResult Update(CreateOrderViewModel obj, IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var pickUp = int.Parse(obj.PickUpWarehouse);
-                var dropoff = int.Parse(obj.DropOffWarehouse);
-                obj.Order.PickUpWarehouseId = pickUp;
-                obj.Order.DropOffWarehouseId = dropoff;
-                obj.Order.DateOfCreation = DateTime.Today;
+                if (ModelState.IsValid)
+                {
+                    var pickUp = int.Parse(obj.PickUpWarehouse);
+                    var dropoff = int.Parse(obj.DropOffWarehouse);
 
-                _db.Orders.Update(obj.Order);
-                _db.SaveChanges();
-                return RedirectToAction("OrdersView");
+                    if (pickUp == dropoff)
+                    {
+                        return Update(obj.Order.OrderNr, "Pakrovimo ir iškrovimo sandėliai sutampa");
+                    }
+
+                    obj.Order.PickUpWarehouseId = pickUp;
+                    obj.Order.DropOffWarehouseId = dropoff;
+                    obj.Order.DateOfCreation = DateTime.Today;
+
+                    _db.Orders.Update(obj.Order);
+                    _db.SaveChanges();
+                    return RedirectToAction("OrdersView");
+                }
+                return Update(obj.Order.OrderNr);
+            } catch (Exception exception)
+            {
+                return Update(obj.Order.OrderNr, exception.Message);
             }
-            return View(obj);
         }
 
         // GET: OrderController/Delete/5

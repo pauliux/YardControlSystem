@@ -12,6 +12,7 @@ namespace YardControlSystem.Models
         [Key]
         public int OrderNr { get; set; }
         public DateTime DateOfCreation { get; set; }
+        [Required]
         public string TrailerLicensePlate { get; set; }
         public int PickUpWarehouseId { get; set; }
         public int DropOffWarehouseId { get; set; }

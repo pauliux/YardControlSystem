@@ -34,8 +34,18 @@ namespace YardControlSystem.Controllers.Manager
         }
 
         // GET-Create
-        public IActionResult Create()
+        public IActionResult Create(int? warehouseId, string error = "")
         {
+            ViewBag.ErrorMessage = error;
+
+            if (!Request.Query["warehouseId"].Any())
+            {
+                ViewBag.WarehouseId = warehouseId;
+            } else
+            {
+                ViewBag.WarehouseId = Request.Query["warehouseId"];
+            }
+
             return View();
         }
 
@@ -44,13 +54,25 @@ namespace YardControlSystem.Controllers.Manager
         [ValidateAntiForgeryToken]
         public IActionResult Create(Ramp obj)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (_db.Ramps.Where(x => x.Number == obj.Number && x.WarehouseId == obj.WarehouseId).Any())
+                {
+                    return Create(obj.WarehouseId, "Rampos numeris nėra unikalus");
+                }
+
+                if (obj.Number <= 0 || obj.Number >= int.MaxValue)
+                {
+                    return Create(obj.WarehouseId, "Rampos numeris turi būti teigiamas skaičius");
+                }
+
                 _db.Ramps.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("RampsView", new { id = obj.WarehouseId });
+            } catch (Exception exception)
+            {
+                return Create(obj.WarehouseId, exception.Message);
             }
-            return View();
 
         }
 
@@ -90,8 +112,18 @@ namespace YardControlSystem.Controllers.Manager
         }
 
         // GET Update
-        public IActionResult Update(int? id)
+        public IActionResult Update(int? warehouseId, int? id, string error = "")
         {
+            ViewBag.ErrorMessage = error;
+
+            if (!Request.Query["warehouseId"].Any())
+            {
+                ViewBag.WarehouseId = warehouseId;
+            }
+            else
+            {
+                ViewBag.WarehouseId = Request.Query["warehouseId"];
+            }
 
             if (id == null || id == 0)
             {
@@ -111,14 +143,16 @@ namespace YardControlSystem.Controllers.Manager
         [ValidateAntiForgeryToken]
         public IActionResult Update(Ramp obj)
         {
-            if (ModelState.IsValid)
+            try
             {
                 _db.Ramps.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("RampsView", new { id = obj.WarehouseId });
             }
-            return View(obj);
-
+            catch (Exception exception)
+            {
+                return Update(obj.WarehouseId, obj.Id, exception.Message);
+            }
         }
     }
 

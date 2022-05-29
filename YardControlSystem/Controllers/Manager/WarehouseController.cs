@@ -82,9 +82,9 @@ namespace YardControlSystem.Controllers
         }
 
         // GET Update
-        public IActionResult Update(int? id)
+        public IActionResult Update(int? id, string error = "")
         {
-
+            ViewBag.ErrorMessage = error;
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -103,14 +103,19 @@ namespace YardControlSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(Warehouse obj)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.Warehouses.Update(obj);
-                _db.SaveChanges();
-                return RedirectToAction("WarehousesView");
+                if (ModelState.IsValid)
+                {
+                    _db.Warehouses.Update(obj);
+                    _db.SaveChanges();
+                    return RedirectToAction("WarehousesView");
+                }
+                return View(obj);
+            } catch (Exception exception)
+            {
+                return Update(obj.Id, exception.Message);
             }
-            return View(obj);
-
         }
     }
 }

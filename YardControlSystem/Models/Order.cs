@@ -17,6 +17,6 @@ namespace YardControlSystem.Models
         public Warehouse PickUpWarehouse { get; set; }
         public int DropOffWarehouseId { get; set; }
         public Warehouse DropOffWarehouse { get; set; }
-        public int DriverId { get; set; }
+        public string DriverId { get; set; }
     }
 }

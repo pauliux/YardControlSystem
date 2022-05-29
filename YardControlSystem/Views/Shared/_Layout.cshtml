@@ -55,12 +55,19 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="FreeOrdersView">Užsakymo priskyrimas</a>
                                 </li>
                             }
+                            @if (true || user.Role == Role.Driver)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="DriverOrdersView">Mano užsakymai</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 }
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial.cshtml" />
                 </div>
+            </div>
         </nav>
     </header>
     <div class="container">

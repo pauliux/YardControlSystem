@@ -11,7 +11,7 @@ namespace YardControlSystem.Models.ViewModels
     public class AssignOrderViewModel
     {
         public Order Order { get; set; }
-        //public string PickUpWarehouse { get; set; }
-        //public string DropOffWarehouse { get; set; }
+        public string PickUpWarehouse { get; set; }
+        public string DropOffWarehouse { get; set; }
     }
 }

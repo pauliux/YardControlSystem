@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YardControlSystem.Data;
 
 namespace YardControlSystem.Migrations
 {
     [DbContext(typeof(YardControlSystemIdentityContext))]
-    partial class YardControlSystemIdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20220529105903_ChangeDriverIdToString")]
+    partial class ChangeDriverIdToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

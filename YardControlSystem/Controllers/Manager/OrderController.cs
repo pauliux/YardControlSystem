@@ -42,44 +42,6 @@ namespace YardControlSystem.Controllers.Manager
             return View(orderViewModels);
         }
 
-        // GET: OrderController
-        public ActionResult FreeOrdersView()
-        {
-            var orders = _db.Orders.ToList();
-            var orderViewModels = new List<OrderViewModel>();
-            foreach (var order in orders)
-            {
-                order.DateOfCreation = order.DateOfCreation.Date;
-                order.PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id);
-                order.DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id);
-                orderViewModels.Add(new OrderViewModel
-                {
-                    Order = order,
-                    HasOperations = _db.Operations.Where(x => x.OrderId == order.OrderNr).Any()
-                });
-            }
-            return View(orderViewModels);
-        }
-
-        // GET: OrderController
-        public ActionResult AsignOrderView()
-        {
-            var orders = _db.Orders.ToList();
-            var orderViewModels = new List<OrderViewModel>();
-            foreach (var order in orders)
-            {
-                order.DateOfCreation = order.DateOfCreation.Date;
-                order.PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id);
-                order.DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id);
-                orderViewModels.Add(new OrderViewModel
-                {
-                    Order = order,
-                    HasOperations = _db.Operations.Where(x => x.OrderId == order.OrderNr).Any()
-                });
-            }
-            return View(orderViewModels);
-        }
-
         // GET: OrderController/Create
         public ActionResult Create()
         {
@@ -100,12 +62,6 @@ namespace YardControlSystem.Controllers.Manager
             return View(createOrderViewModel);
         }
 
-        // GET: OrderController/Create
-        public ActionResult AssignOrder()
-        {
-   
-            return View();
-        }
 
         // POST: OrderController/Create
         [HttpPost]

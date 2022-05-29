@@ -1,6 +1,7 @@
 ﻿@model YardControlSystem.Models.ViewModels.AssignOrderViewModel
 
-<form method="post" asp-action="Create">
+<form method="post" asp-action="AssignOrderToDriver">
+    <input asp-for="Order.OrderNr" hidden />
     <div class="border p-3">
         @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
         <div class="form-group row">
@@ -15,7 +16,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="Order.OrderNr" max="2,147,483,647" class="form-control" />
+                        <input asp-for="Order.OrderNr" disabled class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -25,29 +26,30 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="Order.TrailerLicensePlate" class="form-control" />
+                        <input asp-for="Order.TrailerLicensePlate" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <label asp-for="Order.PickUpWarehouseId">Pakrovimo sandėlys</label>
+                        <label asp-for="PickUpWarehouse">Pakrovimo sandėlys</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="Order.PickUpWarehouse" class="form-control" />
+                        <input asp-for="PickUpWarehouse" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <label asp-for="Order.DropOffWarehouseId">Iškrovimo sandėlys</label>
+                        <label asp-for="DropOffWarehouse">Iškrovimo sandėlys</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="Order.DropOffWarehouse" class="form-control" />
+                        <input asp-for="DropOffWarehouse" disabled class="form-control" />
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
                         <div class="col">

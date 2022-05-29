@@ -8,7 +8,7 @@
     </div>
     <br />
 
-    @if (Model.Count() > 0)
+    @if(Model.Count() > 0)
     {
         <table class="table table-bordered table-striped" style="width:100%">
             <thead>
@@ -29,7 +29,7 @@
                         Transporto priemonės nr.
                     </th>
                     <th>
-                        Statusas
+                        Veiksmas
                     </th>
                 </tr>
             </thead>
@@ -45,11 +45,9 @@
                     <td width="25%">@obj.Order.DropOffWarehouse.Address</td>
                     <td width="25%">@obj.Order.TrailerLicensePlate</td>
                     <td width="25%">@(obj.HasOperations ? "Priskirtas" : "Nepriskirtas")</td>
-                    <td><a asp-controller="Order" asp-action="AssignOrder" asp-route-Id="@obj.Order.OrderNr" class="btn btn-primary">Prisiskirti užsakymą</a></td>
+                    <td><a asp-controller="Order" asp-action="AssignOrderView" asp-route-Id="@obj.Order.OrderNr" class="btn btn-primary">Prisiskirti užsakymą</a></td>
                 </tr>
                     }
-
-
                 }
             </tbody>
         </table>

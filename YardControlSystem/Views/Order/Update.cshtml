@@ -1,0 +1,82 @@
+﻿@model YardControlSystem.Models.ViewModels.CreateOrderViewModel
+
+<form method="post" asp-action="Update">
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Atnaujinti užsakymą</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="@Model.Order.OrderNr">Užsakymo nr.</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="@Model.Order.OrderNr" disabled max="2,147,483,647" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="@Model.Order.OrderNr" hidden max="2,147,483,647" class="form-control" />
+                        <span asp-validation-for="@Model.Order.OrderNr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="@Model.Order.TrailerLicensePlate">Transporto priemonės valstybiniai nr.</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="@Model.Order.TrailerLicensePlate" class="form-control" />
+                        <span asp-validation-for="@Model.Order.TrailerLicensePlate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="PickUpWarehouse">Pakrovimo sandėlys</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <select asp-for="PickUpWarehouse" asp-items=ViewBag.Warehouses>
+                            <option selected="selected" value=ViewBag.SelectedPickUp.Value></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="DropOffWarehouse">Iškrovimo sandėlys</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <select asp-for="DropOffWarehouse" asp-items=ViewBag.Warehouses>
+                            <option selected="selected" value=ViewBag.SelectedDropoff.Value></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-danger w-75" value="Atnaujinti" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="OrdersView" class="btn btn-success w-75">Atgal</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -84,31 +84,74 @@ namespace YardControlSystem.Controllers.Manager
             return RedirectToAction("OrdersView");
         }
 
-        // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: OrderController/Update/5
+        public ActionResult Update(int id)
         {
-            return View();
+            var warehouses = _db.Warehouses.ToList();
+
+            var items = new List<SelectListItem> { };
+
+            foreach (var warehouse in warehouses)
+            {
+                items.Add(new SelectListItem { Text = warehouse.Address, Value = warehouse.Id.ToString() });
+            }
+
+            ViewBag.Warehouses = items;
+
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Orders.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            ViewBag.SelectedPickUp = items.Where(x => x.Value == obj.PickUpWarehouseId.ToString()).First();
+            ViewBag.SelectedPickUp = items.Where(x => x.Value == obj.DropOffWarehouseId.ToString()).First();
+
+            var createOrderViewModel = new CreateOrderViewModel
+            {
+                Order = obj
+            };
+
+            return View(createOrderViewModel);
         }
 
-        // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Update(CreateOrderViewModel obj, IFormCollection collection)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var pickUp = int.Parse(obj.PickUpWarehouse);
+                var dropoff = int.Parse(obj.DropOffWarehouse);
+                obj.Order.PickUpWarehouseId = pickUp;
+                obj.Order.DropOffWarehouseId = dropoff;
+                obj.Order.DateOfCreation = DateTime.Today;
+
+                _db.Orders.Update(obj.Order);
+                _db.SaveChanges();
+                return RedirectToAction("OrdersView");
             }
-            catch
-            {
-                return View();
-            }
+            return View(obj);
         }
 
         // GET: OrderController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Orders.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            obj.PickUpWarehouse = _db.Warehouses.Find(obj.PickUpWarehouseId);
+            obj.DropOffWarehouse = _db.Warehouses.Find(obj.DropOffWarehouseId);
+            return View(obj);
         }
 
         // POST: OrderController/Delete/5
@@ -116,14 +159,15 @@ namespace YardControlSystem.Controllers.Manager
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            var obj = _db.Orders.Find(id);
+            if (obj == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
+
+            _db.Orders.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("OrdersView");
         }
     }
 }

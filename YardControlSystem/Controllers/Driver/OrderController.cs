@@ -77,11 +77,15 @@ namespace YardControlSystem.Controllers.Driver
         }
 
         // GET: OrderController
-        public ActionResult UpdateDriverOrderView(int id)
+        public ActionResult UpdateDriverOrderView(int id, string error = "")
         {
+            ViewBag.ErrorMessage = error;
+
             var order = _db.Orders.Find(id);
             var pickupWarehouse = _db.Warehouses.Find(order.PickUpWarehouseId);
             var dropoffWarehouse = _db.Warehouses.Find(order.DropOffWarehouseId);
+            ViewBag.PickUpWarehouseId = pickupWarehouse.Id;
+            ViewBag.DropOffWarehouseId = dropoffWarehouse.Id;
 
             var orderViewModels = new AssignOrderViewModel()
             {
@@ -95,19 +99,124 @@ namespace YardControlSystem.Controllers.Driver
             return View(orderViewModels);
         }
 
-        // GET: OrderController
-        public ActionResult UpdateDriverOrder(AssignOrderViewModel model)
+        [HttpPost]
+        public ActionResult UpdateDriverOrderView(AssignOrderViewModel model)
         {
             var dbOrder = _db.Orders.Find(model.Order.OrderNr);
 
-            Operation pickupOperation = _db.Operations.Find(dbOrder.PickUpOperationId);
-            Operation dropoffOperation = _db.Operations.Find(dbOrder.DropOffOperationId);
-            pickupOperation.ReservedDate = model.PickUpOperation.ReservedDate;
-            dropoffOperation.ReservedDate = model.DropOffOperation.ReservedDate;
+            var pickUpDateTime = model.PickUpOperation.ReservedDate;
+            var dropOffDateTime = model.DropOffOperation.ReservedDate;
+
+            if (pickUpDateTime < DateTime.Now)
+            {
+                return UpdateDriverOrderView(model.Order.OrderNr, "Pakrovimo laikas praėjęs");
+            }
+            if (dropOffDateTime < DateTime.Now)
+            {
+                return UpdateDriverOrderView(model.Order.OrderNr, "Iškrovimo laikas praėjęs");
+            }
+            if (dropOffDateTime < pickUpDateTime)
+            {
+                return UpdateDriverOrderView(model.Order.OrderNr, "Pakrovimo laikas privalo būti ankstesnis");
+            }
+
+            var pickUpWareHouseRamps = _db.Ramps.Where(x => x.WarehouseId == int.Parse(model.PickUpWarehouse) && x.Working).ToList();
+
+            if (!pickUpWareHouseRamps.Any())
+            {
+                return UpdateDriverOrderView(model.Order.OrderNr, "Pakrovimo sandėlyje nėra veikiančių rampų");
+            }
+
+            foreach (var ramp in pickUpWareHouseRamps)
+            {
+                var pickUpWarehouseOperations = _db.Operations.Where(x => x.WarehouseId == int.Parse(model.PickUpWarehouse)).Where(x => x.RampId == ramp.Id && x.DepartureDate == null).ToList();
+
+                bool overlap = false;
+                foreach (var operation in pickUpWarehouseOperations)
+                {
+                    if (operation.OrderId == model.Order.OrderNr)
+                    {
+                        continue;
+                    }
+
+                    if (operation.ReservedDate < model.PickUpOperation.ReservedDate.AddMinutes(60) && model.PickUpOperation.ReservedDate < operation.ReservedDate.AddMinutes(60))
+                    {
+                        overlap = true;
+                    }
+                }
+
+                if (!overlap)
+                {
+                    model.PickUpOperation.RampId = ramp.Id;
+                    goto pickUpTimeAvailable;
+                }
+            }
+
+            return UpdateDriverOrderView(model.Order.OrderNr, "Pakrovimo laikas užimtas");
+
+        pickUpTimeAvailable:
+
+            var dropOffWareHouseRamps = _db.Ramps.Where(x => x.WarehouseId == int.Parse(model.DropOffWarehouse) && x.Working).ToList();
+
+            if (!dropOffWareHouseRamps.Any())
+            {
+                return UpdateDriverOrderView(model.Order.OrderNr, "Iškrovimo sandėlyje nėra veikiančių rampų");
+            }
+
+            foreach (var ramp in dropOffWareHouseRamps)
+            {
+                var dropOffWarehouseOperations = _db.Operations.Where(x => x.WarehouseId == int.Parse(model.DropOffWarehouse)).Where(x => x.RampId == ramp.Id && x.DepartureDate == null).ToList();
+
+                bool overlap = false;
+                foreach (var operation in dropOffWarehouseOperations)
+                {
+                    if (operation.OrderId == model.Order.OrderNr)
+                    {
+                        continue;
+                    }
+
+                    if (operation.ReservedDate < model.DropOffOperation.ReservedDate.AddMinutes(60) && model.DropOffOperation.ReservedDate < operation.ReservedDate.AddMinutes(60))
+                    {
+                        overlap = true;
+                    }
+                }
+
+                if (!overlap)
+                {
+                    model.DropOffOperation.RampId = ramp.Id;
+                    goto dropOffTimeAvailable;
+                }
+            }
+
+            return UpdateDriverOrderView(model.Order.OrderNr, "Iškrovimo laikas užimtas");
+
+        dropOffTimeAvailable:
+
+            var pickupOperation = new Operation()
+            {
+                OrderId = dbOrder.OrderNr,
+                WarehouseId = dbOrder.PickUpWarehouseId,
+                ReservedDate = model.PickUpOperation.ReservedDate,
+                RampId = model.PickUpOperation.RampId,
+                Duration = 60
+            };
+            var dropoffOperation = new Operation()
+            {
+                OrderId = dbOrder.OrderNr,
+                WarehouseId = dbOrder.DropOffWarehouseId,
+                ReservedDate = model.DropOffOperation.ReservedDate,
+                RampId = model.DropOffOperation.RampId,
+                Duration = 60
+            };
+
+            Operation pickupOperationUpdated = _db.Operations.Find(dbOrder.PickUpOperationId);
+            Operation dropoffOperationUpdated = _db.Operations.Find(dbOrder.DropOffOperationId);
+            pickupOperationUpdated.ReservedDate = model.PickUpOperation.ReservedDate;
+            dropoffOperationUpdated.ReservedDate = model.DropOffOperation.ReservedDate;
 
             _db.Orders.Update(dbOrder);
-            _db.Operations.Update(pickupOperation);
-            _db.Operations.Update(dropoffOperation);
+            _db.Operations.Update(pickupOperationUpdated);
+            _db.Operations.Update(dropoffOperationUpdated);
             _db.SaveChanges();
 
             return RedirectToAction("DriverOrdersView");

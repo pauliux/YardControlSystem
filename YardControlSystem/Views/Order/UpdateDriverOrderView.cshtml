@@ -18,7 +18,7 @@
     </script>
 
 }
-<form method="post" asp-action="UpdateDriverOrder">
+<form method="post" asp-action="UpdateDriverOrderView">
     <input asp-for="Order.OrderNr" hidden />
     <div class="border p-3">
         <div class="form-group row">
@@ -47,6 +47,7 @@
                         <input asp-for="Order.TrailerLicensePlate" disabled class="form-control" />
                     </div>
                 </div>
+                <input asp-for="PickUpWarehouse" value=@ViewBag.PickUpWarehouseId hidden />
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="PickUpWarehouse">Pakrovimo sandėlys</label>
@@ -57,6 +58,7 @@
                         <input asp-for="PickUpWarehouse" disabled class="form-control" />
                     </div>
                 </div>
+                <input asp-for="DropOffWarehouse" value=@ViewBag.DropOffWarehouseId hidden />
                 <div class="form-group row">
                     <div class="col-6">
                         <label asp-for="DropOffWarehouse">Iškrovimo sandėlys</label>

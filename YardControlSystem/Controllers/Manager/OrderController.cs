@@ -152,7 +152,18 @@ namespace YardControlSystem.Controllers.Manager
         // GET: OrderController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Orders.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            obj.PickUpWarehouse = _db.Warehouses.Find(obj.PickUpWarehouseId);
+            obj.DropOffWarehouse = _db.Warehouses.Find(obj.DropOffWarehouseId);
+            return View(obj);
         }
 
         // POST: OrderController/Delete/5
@@ -160,14 +171,15 @@ namespace YardControlSystem.Controllers.Manager
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            var obj = _db.Orders.Find(id);
+            if (obj == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
-            {
-                return View();
-            }
+
+            _db.Orders.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("OrdersView");
         }
     }
 }

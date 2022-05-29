@@ -1,0 +1,76 @@
+﻿@model YardControlSystem.Models.Order
+
+<form method="post" asp-action="Delete">
+    <input asp-for="OrderNr" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Pašalinti rampą</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="@Model.OrderNr">Užsakymo nr.</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="@Model.OrderNr" disabled max="2,147,483,647" class="form-control" />
+                        <span asp-validation-for="@Model.OrderNr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="@Model.TrailerLicensePlate">Transporto priemonės valstybiniai nr.</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="@Model.TrailerLicensePlate" disabled class="form-control" />
+                        <span asp-validation-for="@Model.TrailerLicensePlate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="@Model.PickUpWarehouseId">Pakrovimo sandėlys</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="@Model.PickUpWarehouse.Company" disabled class="form-control" />
+                        <span asp-validation-for="@Model.PickUpWarehouse.Company" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label asp-for="@Model.DropOffWarehouseId">Iškrovimo sandėlys</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <input asp-for="@Model.DropOffWarehouse.Company" disabled class="form-control" />
+                        <span asp-validation-for="@Model.DropOffWarehouse.Company" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-danger w-75" value="Šalinti" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="OrdersView" class="btn btn-success w-75">Atgal</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

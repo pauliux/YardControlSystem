@@ -34,19 +34,31 @@
                     <th>
                         Statusas
                     </th>
+                    <th>
+                        Veiksmai
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var obj in Model)
                 {
-                    <tr>
-                        <td width="25%">@obj.Order.OrderNr</td>
-                        <td width="25%">@obj.Order.DateOfCreation.ToShortDateString()</td>
-                        <td width="25%">@obj.Order.PickUpWarehouse.Address</td>
-                        <td width="25%">@obj.Order.DropOffWarehouse.Address</td>
-                        <td width="25%">@obj.Order.TrailerLicensePlate</td>
-                        <td width="25%">@(obj.HasOperations ? "Priskirtas" : "Nepriskirtas")</td>
-                    </tr>
+                <tr>
+                    <td width="25%">@obj.Order.OrderNr</td>
+                    <td width="25%">@obj.Order.DateOfCreation.ToShortDateString()</td>
+                    <td width="25%">@obj.Order.PickUpWarehouse.Address</td>
+                    <td width="25%">@obj.Order.DropOffWarehouse.Address</td>
+                    <td width="25%">@obj.Order.TrailerLicensePlate</td>
+                    <td width="25%">@(obj.HasOperations ? "Priskirtas" : "Nepriskirtas")</td>
+                    @if (!obj.HasOperations)
+                    {
+                        <td width="30%">
+                            <div class="w-100 btn-group" role="group">
+                                <a asp-controller="Order" asp-action="Update" asp-route-Id="@obj.Order.OrderNr" class="btn btn-primary mx-1">Atnaujinti</a>
+                                <a asp-controller="Order" asp-action="Delete" asp-route-Id="@obj.Order.OrderNr" class="btn btn-danger mx-1">Šalinti</a>
+                            </div>
+                        </td>
+                    }
+                </tr>
 
                 }
             </tbody>

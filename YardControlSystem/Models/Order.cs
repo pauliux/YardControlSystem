@@ -14,9 +14,9 @@ namespace YardControlSystem.Models
         public DateTime DateOfCreation { get; set; }
         public string TrailerLicensePlate { get; set; }
         public int PickUpWarehouseId { get; set; }
-        public Warehouse PickUpWarehouse { get; set; }
         public int DropOffWarehouseId { get; set; }
-        public Warehouse DropOffWarehouse { get; set; }
         public string DriverId { get; set; }
+        public int PickUpOperationId { get; set; }
+        public int DropOffOperationId { get; set; }
     }
 }

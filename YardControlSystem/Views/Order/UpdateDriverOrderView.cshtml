@@ -1,65 +1,61 @@
 ﻿@model YardControlSystem.Models.ViewModels.OrderViewModel
 
-<form method="post" asp-action="Delete">
+<form method="post" asp-action="AssignOrderToDriver">
     <input asp-for="Order.OrderNr" hidden />
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Pašalinti užsakymą</h2>
+            <h2 class="text-black-50 pl-3">Priskirto užsakymo atnaujinimas</h2>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="form-group row">
                     <div class="col-6">
-                        <label asp-for="@Model.Order.OrderNr">Užsakymo nr.</label>
+                        <label asp-for="Order.OrderNr">Užsakymo nr.</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="@Model.Order.OrderNr" disabled max="2,147,483,647" class="form-control" />
-                        <span asp-validation-for="@Model.Order.OrderNr" class="text-danger"></span>
+                        <input asp-for="Order.OrderNr" disabled class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <label asp-for="@Model.Order.TrailerLicensePlate">Transporto priemonės valstybiniai nr.</label>
+                        <label asp-for="Order.TrailerLicensePlate">Transporto priemonės valstybiniai nr.</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="@Model.Order.TrailerLicensePlate" disabled class="form-control" />
-                        <span asp-validation-for="@Model.Order.TrailerLicensePlate" class="text-danger"></span>
+                        <input asp-for="Order.TrailerLicensePlate" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <label asp-for="@Model.Order.PickUpWarehouseId">Pakrovimo sandėlys</label>
+                        <label asp-for="PickUpWarehouse">Pakrovimo sandėlys</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="@Model.PickUpWarehouse.Company" disabled class="form-control" />
-                        <span asp-validation-for="@Model.PickUpWarehouse.Company" class="text-danger"></span>
+                        <input asp-for="PickUpWarehouse" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <label asp-for="@Model.Order.DropOffWarehouseId">Iškrovimo sandėlys</label>
+                        <label asp-for="DropOffWarehouse">Iškrovimo sandėlys</label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <input asp-for="@Model.DropOffWarehouse.Company" disabled class="form-control" />
-                        <span asp-validation-for="@Model.DropOffWarehouse.Company" class="text-danger"></span>
+                        <input asp-for="DropOffWarehouse" disabled class="form-control" />
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-danger w-75" value="Šalinti" />
+                            <input type="submit" class="btn btn-info w-75" value="Priskirti" />
                         </div>
                         <div class="col">
-                            <a asp-action="OrdersView" class="btn btn-success w-75">Atgal</a>
+                            <a asp-controller="Order" asp-action="FreeOrdersView" class="btn btn-danger w-75">Atgal</a>
                         </div>
                     </div>
                 </div>
@@ -68,9 +64,3 @@
         </div>
     </div>
 </form>
-
-@section Scripts{
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-}

@@ -8,6 +8,8 @@ namespace YardControlSystem.Models.ViewModels
     public class OrderViewModel
     {
         public Order Order { get; set; }
+        public Warehouse PickUpWarehouse { get; set; }
+        public Warehouse DropOffWarehouse { get; set; }
         public bool HasOperations { get; set; }
     }
 }

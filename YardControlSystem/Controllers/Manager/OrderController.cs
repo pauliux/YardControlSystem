@@ -30,11 +30,12 @@ namespace YardControlSystem.Controllers.Manager
             foreach (var order in orders)
             {
                 order.DateOfCreation = order.DateOfCreation.Date;
-                order.PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id);
-                order.DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id);
+
                 orderViewModels.Add(new OrderViewModel
                 {
                     Order = order,
+                    PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id),
+                    DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id),
                     HasOperations = _db.Operations.Where(x => x.OrderId == order.OrderNr).Any()
                 });
             }
@@ -149,9 +150,15 @@ namespace YardControlSystem.Controllers.Manager
             {
                 return NotFound();
             }
-            obj.PickUpWarehouse = _db.Warehouses.Find(obj.PickUpWarehouseId);
-            obj.DropOffWarehouse = _db.Warehouses.Find(obj.DropOffWarehouseId);
-            return View(obj);
+            var createOrderViewModel = new OrderViewModel
+            {
+                Order = obj,
+                PickUpWarehouse = _db.Warehouses.Find(obj.PickUpWarehouseId),
+                DropOffWarehouse = _db.Warehouses.Find(obj.DropOffWarehouseId)
+            };
+
+
+            return View(createOrderViewModel);
         }
 
         // POST: OrderController/Delete/5

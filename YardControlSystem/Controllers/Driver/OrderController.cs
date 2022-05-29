@@ -29,13 +29,19 @@ namespace YardControlSystem.Controllers.Driver
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var orders = _db.Orders.Where(x => x.DriverId.Equals(userId)).ToList();
-            var orderViewModels = new List<Order>();
+            var orderViewModels = new List<OrderViewModel>();
             foreach (var order in orders)
             {
-                order.PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id);
-                order.DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id);
+                orderViewModels.Add(new OrderViewModel
+                {
+                    Order = order,
+                    PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id),
+                    DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id),
+                    HasOperations = _db.Operations.Where(x => x.OrderId == order.OrderNr).Any()
+                });
+
             }
-            return View(orders);
+            return View(orderViewModels);
         }
 
         // GET: OrderController
@@ -50,11 +56,12 @@ namespace YardControlSystem.Controllers.Driver
                 if (!hasOperations)
                 {
                     order.DateOfCreation = order.DateOfCreation.Date;
-                    order.PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id);
-                    order.DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id);
+
                     orderViewModels.Add(new OrderViewModel
                     {
                         Order = order,
+                        PickUpWarehouse = _db.Warehouses.FirstOrDefault(x => order.PickUpWarehouseId == x.Id),
+                        DropOffWarehouse = _db.Warehouses.FirstOrDefault(x => order.DropOffWarehouseId == x.Id),
                         HasOperations = hasOperations
                     });
                 }
@@ -68,15 +75,31 @@ namespace YardControlSystem.Controllers.Driver
             var order = _db.Orders.Find(id);
             var pickupWarehouse = _db.Warehouses.Find(order.PickUpWarehouseId);
             var dropoffWarehouse = _db.Warehouses.Find(order.DropOffWarehouseId);
-            order.PickUpWarehouse = pickupWarehouse;
-            order.DropOffWarehouse = dropoffWarehouse;
 
-            var orderViewModels = new AssignOrderViewModel();
-            orderViewModels.Order = order;
-            orderViewModels.PickUpWarehouse =
-                pickupWarehouse.Company + " - " + pickupWarehouse.Address + ", " + pickupWarehouse.City;
-            orderViewModels.DropOffWarehouse =
-                dropoffWarehouse.Company + " - " + dropoffWarehouse.Address + ", " + dropoffWarehouse.City;
+            var orderViewModels = new AssignOrderViewModel()
+            {
+                Order = order,
+                PickUpWarehouse = pickupWarehouse.Company + " - " + pickupWarehouse.Address + ", " + pickupWarehouse.City,
+                DropOffWarehouse = dropoffWarehouse.Company + " - " + dropoffWarehouse.Address + ", " + dropoffWarehouse.City
+            };
+            return View(orderViewModels);
+        }
+
+        // GET: OrderController
+        public ActionResult UpdateDriverOrderView(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var order = _db.Orders.FirstOrDefault(x => x.DriverId.Equals(userId));
+            var pickupWarehouse = _db.Warehouses.Find(order.PickUpWarehouseId);
+            var dropoffWarehouse = _db.Warehouses.Find(order.DropOffWarehouseId);
+
+            var orderViewModels = new AssignOrderViewModel()
+            {
+                Order = order,
+                PickUpWarehouse = pickupWarehouse.Company + " - " + pickupWarehouse.Address + ", " + pickupWarehouse.City,
+                DropOffWarehouse = dropoffWarehouse.Company + " - " + dropoffWarehouse.Address + ", " + dropoffWarehouse.City
+            };
+
             return View(orderViewModels);
         }
 
@@ -88,7 +111,7 @@ namespace YardControlSystem.Controllers.Driver
 
             var pickupOperation = new Operation() { OrderId = dbOrder.OrderNr, WarehouseId = dbOrder.PickUpWarehouseId };
             var dropoffOperation = new Operation() { OrderId = dbOrder.OrderNr, WarehouseId = dbOrder.DropOffWarehouseId };
-  
+
             _db.Orders.Update(dbOrder);
             _db.Operations.Add(pickupOperation);
             _db.Operations.Add(dropoffOperation);
@@ -96,5 +119,7 @@ namespace YardControlSystem.Controllers.Driver
 
             return RedirectToAction("FreeOrdersView");
         }
+
+       
     }
 }

@@ -22,6 +22,8 @@
     <Compile Include="Migrations\20220522224715_FixOrderDateOfCreationType.Designer.cs" />
     <Compile Include="Migrations\20220529105903_ChangeDriverIdToString.cs" />
     <Compile Include="Migrations\20220529105903_ChangeDriverIdToString.Designer.cs" />
+    <Compile Include="Migrations\20220529135936_AddOperationFieldsToOrder.cs" />
+    <Compile Include="Migrations\20220529135936_AddOperationFieldsToOrder.Designer.cs" />
     <Compile Include="Migrations\YardControlSystemIdentityContextModelSnapshot.cs" />
   </ItemGroup>
 

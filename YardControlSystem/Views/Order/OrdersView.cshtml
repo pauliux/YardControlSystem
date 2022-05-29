@@ -45,8 +45,8 @@
                 <tr>
                     <td width="25%">@obj.Order.OrderNr</td>
                     <td width="25%">@obj.Order.DateOfCreation.ToShortDateString()</td>
-                    <td width="25%">@obj.Order.PickUpWarehouse.Address</td>
-                    <td width="25%">@obj.Order.DropOffWarehouse.Address</td>
+                    <td width="25%">@obj.PickUpWarehouse.Address</td>
+                    <td width="25%">@obj.DropOffWarehouse.Address</td>
                     <td width="25%">@obj.Order.TrailerLicensePlate</td>
                     <td width="25%">@(obj.HasOperations ? "Priskirtas" : "Nepriskirtas")</td>
                     @if (!obj.HasOperations)

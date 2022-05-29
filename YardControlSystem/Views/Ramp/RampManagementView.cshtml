@@ -16,81 +16,71 @@
 
     @if (Model.Count() > 0)
     {
-        <table class="table table-bordered table-striped" style="width:100%">
-            <thead>
-            </thead>
-            <tbody>
+        @foreach (var item in Model)
+        {
 
-                
-                @foreach (var item in Model)
+            <table class="table table-bordered table-striped" style="width:100%">
+                <tr>
+                    <td width="100%">
+                        <h4>
+                            @item.Warehouses.Company - @item.Warehouses.Address, @item.Warehouses.City
+                        </h4>
+                    </td>
+
+                </tr>
+
+                @foreach (var rampa in item.Ramps)
                 {
 
-                    <table class="table table-bordered table-striped" style="width:100%">
+
+                    @if (rampa.WarehouseId == item.Warehouses.Id)
+                    {
+
                         <tr>
+
                             <td width="25%">
-                            <h4>
-                                @item.Warehouses.Company
-                                </h4>
-                                </td>
-
-                        </tr>
-
-                        @foreach (var rampa in item.Ramps)
-                        {
-
-
-                            @if (rampa.WarehouseId == item.Warehouses.Id)
-                            {
-
-                            <tr>
-                               
-                            <td width="25%">
-                                    <h6>
-                                        Rampa @rampa.Number
-                                        </h6>
+                                <h6>
+                                    Rampa @rampa.Number
+                                </h6>
                             </td>
 
-                            </tr>
-                            }
+                        </tr>
+                    }
 
-                            @foreach (var operation in item.Operations)
+                    @foreach (var operation in item.Operations)
+                    {
+                        <tr>
+                            @if (item.Warehouses.Id == operation.WarehouseId && operation.RampId == rampa.Id)
                             {
-                    <tr>
-                        @if (item.Warehouses.Id == operation.WarehouseId && operation.RampId == rampa.Id)
-                        {
-                            @if (operation.ReservedDate.AddMinutes(operation.Duration) > DateTime.Now && operation.DepartureDate.Length == 0)
-                            {
-                                <td width="25%"> Operacija @operation.Id</td>
-                                <td width="25%">Rezervuota data @operation.ReservedDate</td>
-
-                                @if (operation.ArrivalDate.Length != 0)
+                                @if (operation.ReservedDate.AddMinutes(operation.Duration) > DateTime.Now && operation.DepartureDate.Length == 0)
                                 {
-                                    <td>
-                                        <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti išvykimą</a>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti atvykimą</a>
-                                    </td>
+                                    <td width="25%"> Operacija @operation.Id</td>
+                                    <td width="25%">Rezervuota data @operation.ReservedDate</td>
+
+                                    @if (operation.ArrivalDate.Length != 0)
+                                    {
+                                        <td>
+                                            <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti išvykimą</a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <a asp-controller="Ramp" asp-action="CheckDone" asp-route-Id="@operation.Id" class="btn btn-primary mx-1">Pažymėti atvykimą</a>
+                                        </td>
+                                    }
+
+                                    break;
                                 }
 
-                                break;
                             }
 
-                        }
-
-                    </tr>
-                            }
-                        }
-                    </table>
-
+                        </tr>
+                    }
                 }
+            </table>
 
-
-            </tbody>
-        </table>
+        }
     }
     else
     {
